@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camera Capture</title>
+    <style>
+      #camera-container,
+      #captured-image-container {
+        position: relative;
+        width: 100%;
+        height: 50vw;
+        overflow: hidden;
+        /* display: flex; */
+        /* justify-content: center; */
+      }
+
+      #video {
+        width: 100%;
+        height: 50vw;
+      }
+
+      #video-box {
+        position: absolute;
+        width: 250px;
+        height: 300px;
+        border-radius: 50%;
+        background: transparent;
+        box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        border: 1px dashed lightgray;
+        overflow: hidden;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #capture-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #359e7b;
+        cursor: pointer;
+        left: 46%;
+      }
+
+      #capture-btn2 {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #359e7b;
+        cursor: pointer;
+        left: 66%;
+        z-index: 9999;
+      }
+
+      #confirm-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #39c24a;
+        cursor: pointer;
+      }
+
+      #retake-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #d5552f;
+        cursor: pointer;
+      }
+
+      #capture-btn h6,
+      #confirm-btn h6,
+      #retake-btn h6 {
+        color: black;
+        margin-top: 55px;
+        text-align: center;
+      }
+
+      #captured-image-container img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div id="camera-container">
+        <video id="video" autoplay></video>
+        <!-- <div id="video-box"></div> -->
+        <button id="capture-btn"><h6>Capture</h6></button>
+      </div>
+      <div id="captured-image-container" style="display: none">
+        <img id="captured-image" src="" alt="Captured Image" />
+        <div style="position: absolute; left: 20%; bottom: 10px">
+          <button id="confirm-btn"><h6>Confirm</h6></button>
+        </div>
+        <div style="position: absolute; left: 30%; bottom: 10px">
+          <button id="retake-btn"><h6>Retake</h6></button>
+        </div>
+      </div>
+      <div id="permission-denied-container" style="display: none">
+        <p>Camera access denied.</p>
+        <p>
+          To enable camera access, please go to your browser settings and allow
+          camera access for this site.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      videoContainer = document.getElementById("camera-container");
+      video = document.getElementById("video");
+      captureBtn = document.getElementById("capture-btn");
+      capturedImageContainer = document.getElementById(
+        "captured-image-container"
+      );
+      capturedImage = document.getElementById("captured-image");
+      confirmBtn = document.getElementById("confirm-btn");
+      retakeBtn = document.getElementById("retake-btn");
+      permissionDeniedContainer = document.getElementById(
+        "permission-denied-container"
+      );
+      stream = null;
+
+      // Hiding the overlay upon the camera
+      const overlayHTML = '<div id="video-box"></div>';
+
+      let showOverlay = true;
+
+      function updateOverlay() {
+        if (showOverlay) {
+          videoContainer.insertAdjacentHTML("afterbegin", overlayHTML);
+        } else {
+          const overlay = document.getElementById("video-box");
+          if (overlay) {
+            overlay.remove();
+          }
+        }
+      }
+
+      // Call the updateOverlay function initially
+      updateOverlay();
+
+      async function startCamera() {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          video.srcObject = stream;
+        } catch (error) {
+          console.error("Error accessing camera:", error);
+          permissionDeniedContainer.style.display = "block";
+        }
+      }
+
+      var captureImage = function (event) {
+        event.preventDefault();
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video, 0, 0);
+        const imageData = canvas.toDataURL("image/png");
+        capturedImage.src = imageData;
+        videoContainer.style.display = "none";
+        capturedImageContainer.style.display = "block";
+        stopCamera();
+      };
+
+      var retakePicture = function (event) {
+        event.preventDefault();
+        startCamera();
+        videoContainer.style.display = "block";
+        capturedImageContainer.style.display = "none";
+      };
+
+      var stopCamera = function () {
+        if (stream) {
+          const tracks = stream.getTracks();
+          tracks.forEach((track) => track.stop());
+        }
+      };
+
+      captureBtn.addEventListener("click", captureImage);
+
+      confirmBtn.addEventListener("click", () => {
+        alert("success");
+        event.preventDefault();
+      });
+
+      retakeBtn.addEventListener("click", retakePicture);
+      startCamera();
+      window.addEventListener("beforeunload", stopCamera);
+    </script>
+  </body>
+</html>
