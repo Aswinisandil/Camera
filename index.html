@@ -5,14 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Camera Capture</title>
     <style>
+
+@media (min-width: 993px){
       #camera-container,
       #captured-image-container {
         position: relative;
         width: 100%;
         height: 100%;
         overflow: hidden;
-        /* display: flex; */
-        /* justify-content: center; */
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 0vh auto !important;
+        border-radius: 0;
       }
 
       #video {
@@ -22,8 +28,143 @@
 
       #video-box {
         position: absolute;
-        width: 28vw;
-        height: 34vw;
+        width: 26vw;
+        height: 32vw;
+        border-radius: 50%;
+        background: transparent;
+        box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        border: 1px dashed lightgray;
+        overflow: hidden;
+        left: 50%;
+        top: 45%;
+        transform: translate(-50%, -50%);
+      }
+
+      #capture-btn {
+        position: absolute;
+        width: 5vw;
+        height: 5vw;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 10vh;
+        background-color: #359e7b;
+        cursor: pointer;
+        left: 42%;
+      }
+
+      #capture-btn2 {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #359e7b;
+        cursor: pointer;
+        left: 66%;
+        z-index: 9999;
+      }
+
+      #confirm-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #39c24a;
+        cursor: pointer;
+      }
+
+      #retake-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #d5552f;
+        cursor: pointer;
+      }
+
+      #capture-btn h6{
+        color: white;
+        margin-top: 10vh;
+        text-align: center;
+        font-size: 1vw;
+      }
+
+
+      #confirm-btn h6,
+      #retake-btn h6 {
+        color: black;
+        margin-top: 8vh;
+        text-align: center;
+        font-size: 1vw;
+      }
+
+      #controls-container {
+        position: absolute;
+        top: 85%;
+        left: 50%;
+        width: 5vw;
+      }
+
+      #controls-container h6{
+        color: white;
+        margin-top: 2vh;
+        text-align: center;
+        font-size: 1vw;
+        width: 9vw;
+      }
+
+      input[type="color" i] {
+        appearance: auto;
+        inline-size: 5vw;
+        block-size: 4vh;
+        cursor: default;
+        box-sizing: border-box;
+        background-color: buttonface;
+        color: buttontext;
+        border-width: 0.1vw;
+        border-style: solid;
+        border-color: buttonborder;
+        border-image: initial;
+        padding: 0.1vh 0.2vw ;
+        margin-top: 0.3vh;
+        margin-left: 2vw;
+      }
+
+      #captured-image-container img {
+        max-width: 100%;
+        max-height: 100%;
+       
+      }
+
+    }
+
+      @media (min-width: 797px) and (max-width: 992px) {
+        #camera-container,
+      #captured-image-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 5vh auto !important;
+      }
+
+      #video {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #video-box {
+        position: absolute;
+        width: 32vw;
+        height: 45vw;
         border-radius: 50%;
         background: transparent;
         box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
@@ -36,11 +177,146 @@
 
       #capture-btn {
         position: absolute;
+        width: 9vw;
+        height: 9vw;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 15vh;
+        background-color: #359e7b;
+        cursor: pointer;
+        left: 36%;
+      }
+
+      #capture-btn2 {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #359e7b;
+        cursor: pointer;
+        left: 66%;
+        z-index: 9999;
+      }
+
+      #confirm-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #39c24a;
+        cursor: pointer;
+      }
+
+      #retake-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #d5552f;
+        cursor: pointer;
+      }
+
+      #capture-btn h6{
+        color: white;
+        margin-top: 8vh;
+        text-align: center;
+        font-size: 2.8vw;
+        margin-left: -1.5vw;
+      }
+
+
+      #confirm-btn h6,
+      #retake-btn h6 {
+        color: black;
+        margin-top: 8vh;
+        text-align: center;
+        font-size: 1vw;
+      }
+
+      #controls-container {
+        position: absolute;
+        top: 80%;
+        left: 50%;
+        width: 5vw;
+      }
+
+      #controls-container h6{
+        color: white;
+        margin-top: 3vh;
+        text-align: center;
+        font-size: 2.5vw;
+        width: 18vw;
+        font-family: 'Arial';
+        font-weight: 900;
+      }
+
+      input[type="color" i] {
+        appearance: auto;
+        inline-size: 10vw;
+        block-size: 4vh;
+        cursor: default;
+        box-sizing: border-box;
+        background-color: buttonface;
+        color: buttontext;
+        border-width: 0.1vw;
+        border-style: solid;
+        border-color: buttonborder;
+        border-image: initial;
+        padding: 0.1vh 0.7vw ;
+      }
+
+      #captured-image-container img {
+        max-width: 100%;
+        max-height: 100%;
+       
+      }
+ 
+
+    @media only screen and (max-width: 768px) {
+      #camera-container,
+      #captured-image-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 5vh auto !important;
+      }
+
+      #video {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #video-box {
+        position: absolute;
+        width: 50vw;
+        height: 75vw;
+        border-radius: 50%;
+        background: transparent;
+        box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        border: 1px dashed lightgray;
+        overflow: hidden;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%, -50%);
+      }
+
+      #capture-btn {
+        position: absolute;
         width: 5vw;
         height: 5vw;
         border-radius: 50%;
         border: 1px dashed #000000;
-        bottom: 10vh;
+        bottom: 5vh;
         background-color: #359e7b;
         cursor: pointer;
         left: 40%;
@@ -123,6 +399,134 @@
         max-height: 100%;
        
       }
+     }
+
+     @media only screen and (max-width: 575px){
+      #camera-container,
+      #captured-image-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin: 5vh auto !important;
+      }
+
+      #video {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      #video-box {
+        position: absolute;
+        width: 60vw;
+        height: 80vw;
+        border-radius: 50%;
+        background: transparent;
+        box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+        border: 1px dashed lightgray;
+        overflow: hidden;
+        left: 50%;
+        top: 40%;
+        transform: translate(-50%, -50%);
+      }
+
+      #capture-btn {
+        position: absolute;
+        width: 10vw;
+        height: 10vw;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 5vh;
+        background-color: #359e7b;
+        cursor: pointer;
+        left: 40%;
+      }
+
+      #capture-btn2 {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #359e7b;
+        cursor: pointer;
+        left: 66%;
+        z-index: 9999;
+      }
+
+      #confirm-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #39c24a;
+        cursor: pointer;
+      }
+
+      #retake-btn {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 1px dashed #000000;
+        bottom: 40px;
+        background-color: #d5552f;
+        cursor: pointer;
+      }
+
+      #capture-btn h6{
+        color: white;
+        margin-top: 10vh;
+        text-align: center;
+        font-size: 1vw;
+      }
+
+
+      #confirm-btn h6,
+      #retake-btn h6 {
+        color: black;
+        margin-top: 8vh;
+        text-align: center;
+        font-size: 1vw;
+      }
+
+      #controls-container {
+        position: absolute;
+        top: 85%;
+        left: 50%;
+        width: 5vw;
+      }
+
+      input[type="color" i] {
+        appearance: auto;
+        inline-size: 5vw;
+        block-size: 4vh;
+        cursor: default;
+        box-sizing: border-box;
+        background-color: buttonface;
+        color: buttontext;
+        border-width: 0.1vw;
+        border-style: solid;
+        border-color: buttonborder;
+        border-image: initial;
+        padding: 0.1vh 0.2vw ;
+      }
+
+      #captured-image-container img {
+        max-width: 100%;
+        max-height: 100%;
+       
+      }
+     }
+
+
+      }
     </style>
   </head>
   <body>
@@ -133,6 +537,7 @@
         <button id="capture-btn"><h6>Capture</h6></button>
         <div id="controls-container">
           <input type="color" id="overlay-color" value="#000000" />
+          <h6>Overlay Color</h6>
         </div>
       </div>
       <div id="captured-image-container" style="display: none">
@@ -153,7 +558,9 @@
       </div>
     </div>
 
-    <script>
+    <script src="./script.js"></script>
+
+    <!-- <script>
       const videoContainer = document.getElementById("camera-container");
       const video = document.getElementById("video");
       const captureBtn = document.getElementById("capture-btn");
@@ -213,7 +620,7 @@
           console.error("Error accessing camera:", error);
           permissionDeniedContainer.style.display = "block";
         }
-      }
+      } 
 
       var captureImage = function (event) {
         event.preventDefault();
@@ -274,6 +681,6 @@
       }
 
       // ... (other existing code) ...
-    </script>
+    </script> -->
   </body>
 </html>
