@@ -602,8 +602,6 @@
           capturedImage.src = imageData;
           videoContainer.style.display = "none";
           capturedImageContainer.style.display = "block";
-          console.log(imageData);
-          copyBase64ImageToClipboard(imageData);
           stopCamera();
         }
 
@@ -647,7 +645,7 @@
         }
 
         function handleConfirm() {
-          copyImageToClipboard();
+          copyBase64ImageToClipboard(capturedImage.src);
           if (
             confirmAction != undefined &&
             confirmAction != null &&
