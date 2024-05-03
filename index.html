@@ -602,6 +602,8 @@
           capturedImage.src = imageData;
           videoContainer.style.display = "none";
           capturedImageContainer.style.display = "block";
+          console.log(imageData);
+          copyBase64ImageToClipboard(imageData);
           stopCamera();
         }
 
@@ -645,7 +647,77 @@
         }
 
         function handleConfirm() {
-          confirmAction(capturedImage.src);
+          copyImageToClipboard();
+          if (
+            confirmAction != undefined &&
+            confirmAction != null &&
+            capturedImage != null
+          ) {
+            confirmAction(capturedImage.src);
+          }
+        }
+
+        async function copyBase64ImageToClipboard(base64Image) {
+          try {
+            const response = await fetch(base64Image);
+            console.log(response, "response");
+            const blob = await response.blob();
+            console.log(blob, "blob");
+
+            await navigator.clipboard.write([
+              new ClipboardItem({
+                [blob.type]: blob,
+              }),
+            ]);
+            console.log("Base64 image copied to clipboard!");
+          } catch (err) {
+            console.error("Failed to copy base64 image: ", err);
+          }
+        }
+
+        async function getBase64ImageFromClipboard() {
+          try {
+            const clipboardItems = await navigator.clipboard.read();
+            for (const clipboardItem of clipboardItems) {
+              for (const type of clipboardItem.types) {
+                if (type.startsWith("image/")) {
+                  const blob = await clipboardItem.getType(type);
+                  return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = function () {
+                      resolve(reader.result);
+                    };
+                    reader.onerror = function (err) {
+                      reject(err);
+                    };
+                    reader.readAsDataURL(blob);
+                  });
+                }
+              }
+            }
+            return null; // No image found in the clipboard
+          } catch (err) {
+            console.error("Failed to read clipboard: ", err);
+            return null;
+          }
+        }
+
+        function getImage() {
+          getBase64ImageFromClipboard()
+            .then((base64data) => {
+              if (base64data) {
+                console.log("Retrieved base64 image:", base64data);
+                // Do something with the base64 image data
+              } else {
+                console.log("No image found in the clipboard.");
+              }
+            })
+            .catch((err) => {
+              console.error(
+                "Failed to retrieve base64 image from clipboard: ",
+                err
+              );
+            });
         }
 
         function init(customConfirmAction) {
