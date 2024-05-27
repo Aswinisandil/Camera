@@ -760,13 +760,7 @@
           retakeBtn.addEventListener("click", retakePicture);
           startCamera();
           confirmAction = customConfirmAction;
-          if (
-            imageType != null &&
-            imageType != undefined &&
-            (imageType === "png" || imageType === "jpeg" || imageType === "jpg")
-          ) {
-            imageFormat = imageType;
-          }
+         
 
           if (overlayOptions != null) {
             showOverlay =
