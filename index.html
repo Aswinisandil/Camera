@@ -6,9 +6,30 @@
     <title>Camera Capture</title>
     <style>
       body{
-        background-color: #000000;
         box-sizing: border-box;
       }
+
+      #permission-denied-container {
+        display: none;
+      }
+
+      #camera-container {
+        position: relative;
+      }
+      #capture-btn h6 {
+        margin: 0;
+      }
+      .confirm,
+      .retake {
+        display: inline-block;
+      }
+      .confirm h6,
+      .retake h6 {
+        color: white;
+        width: 5vw;
+        text-align: left;
+      }
+
       
         #camera-container,
         #captured-image-container {
@@ -482,44 +503,45 @@
     </style>
   </head>
   <body>
-    <div>
-      <div id="permission-denied-container" style="display: none">
-        <p>Camera access denied.</p>
-        <p>
-          To enable camera access, please go to your browser settings and allow
-          camera access for this site.
-        </p>
+    <section id="permission-denied-container">
+      <p>Camera access denied.</p>
+      <p>
+        To enable camera access, please go to your browser settings and allow
+        camera access for this site.
+      </p>
+      <button style="background:#359e7b;cursor:grab" onClick="CameraCaptureModule.startCamera()">Access Camera</button>
+    </section>
+
+    <main id='parent-camera-container'>
+    <section id="camera-container">
+      <video id="video" autoplay></video>
+      <button id="capture-btn"><h6>Capture</h6></button>
+    </section>
+
+    <section id="captured-image-container" style="display: none;text-align:center">
+      <img id="captured-image" src="" alt="Captured Image" />
+      <div class="confirm">
+        <button id="confirm-btn"><h6>Confirm</h6></button>
       </div>
-      <div id="camera-container">
-        <video id="video" autoplay></video>
-        <!-- <div id="video-box"></div> -->
-        <div class="capture">
-          <button id="capture-btn"></button>
-          <h6>Capture</h6>
-        </div>
-        <!-- <div id="controls-container">
-          <input type="color" id="overlay-color" value="#000000" />
-          <h6>Overlay Color</h6>
-        </div> -->
+      <div class="retake">
+        <button id="retake-btn"><h6>Retake</h6></button>
       </div>
-      <div id="captured-image-container" style="display: none">
-        <img id="captured-image" src="" alt="Captured Image" />
-        <div class="confirm">
-          <button id="confirm-btn"></button>
-          <h6 >Confirm</h6>
-        </div>
-        <div class="retake">
-          <button id="retake-btn"></button>
-          <h6>Retake</h6>
-        </div>
-      </div>
-     
-    </div>
+    </section>
+  </main>
+
+
 
     <script>
       const confirmAction = function (imgSrc) {
         alert("custom confirm action working");
       };
+
+      overlayOptions = {
+        display: true,
+        color: "green",
+      };
+      
+
       const CameraCaptureModule = (function () {
         // Private variables and functions
         let videoContainer,
@@ -530,13 +552,14 @@
           confirmBtn,
           retakeBtn,
           permissionDeniedContainer,
+          parentCameraContainer,
           stream,
           confirmAction;
 
         const overlayHTML = '<div id="video-box"></div>';
 
         let showOverlay = true;
-        let overlayColor = "#000";
+        let overlayColor = "rgb(0,0,0,0.5)";
 
         function getElements() {
           videoContainer = document.getElementById("camera-container");
@@ -551,15 +574,23 @@
           permissionDeniedContainer = document.getElementById(
             "permission-denied-container"
           );
+          parentCameraContainer  = document.getElementById("parent-camera-container");
         }
 
         async function startCamera() {
           try {
             stream = await navigator.mediaDevices.getUserMedia({ video: true });
             video.srcObject = stream;
+            if(permissionDeniedContainer.style.display === 'block'){
+              permissionDeniedContainer.style.display = 'none'
+            }
+            if(parentCameraContainer.style.display === 'none'){
+              parentCameraContainer.style.display = 'block'
+            }
           } catch (error) {
             console.error("Error accessing camera:", error);
             permissionDeniedContainer.style.display = "block";
+            parentCameraContainer.style.display = "none";
           }
         }
 
@@ -622,9 +653,9 @@
         }
 
         function handleConfirm() {
-        if(captureImage.src){
-          copyBase64ImageToClipboard(capturedImage.src);
-        }
+          if(capturedImage.src){
+            copyBase64ImageToClipboard(capturedImage.src);
+          }
           if (
             confirmAction != undefined &&
             confirmAction != null &&
@@ -697,18 +728,24 @@
             });
         }
 
-        function init(customConfirmAction) {
+        function init(customConfirmAction,overlayOptions) {
+          window.addEventListener("beforeunload", stopCamera);
           getElements();
           captureBtn.addEventListener("click", captureImage);
           confirmBtn.addEventListener("click", handleConfirm);
           retakeBtn.addEventListener("click", retakePicture);
           startCamera();
           confirmAction = customConfirmAction;
-          window.addEventListener("beforeunload", stopCamera);
+
+          if (overlayOptions != null) {
+            showOverlay =
+              overlayOptions.display != null ? overlayOptions.display : true;
+            overlayColor = overlayOptions.color || "rgba(0,0,0,0.5)";
+          }
           // Call the updateOverlay function initially
           updateOverlay();
           window.addEventListener("load", updateOverlayColor);
-          overlayColorPicker.addEventListener("input", updateOverlayColor);
+          //overlayColorPicker.addEventListener("input", updateOverlayColor);
 
           // if (options && options.showOverlay !== undefined) {
           //   showOverlay = options.showOverlay;
@@ -725,11 +762,15 @@
         // Public functions and properties
         return {
           initialize: init,
+          startCamera: startCamera,
+          stopCamera:stopCamera,
+          retake:retakePicture
         };
       })();
 
       // Usage
-      CameraCaptureModule.initialize(confirmAction);
+      CameraCaptureModule.initialize(confirmAction,overlayOptions);
+
     </script>
   </body>
 </html>
