@@ -19,6 +19,7 @@
       #capture-btn h6 {
         margin: 0;
       }
+
       .confirm,
       .retake {
         display: inline-block;
@@ -30,9 +31,8 @@
         text-align: left;
       }
 
-      
-        #camera-container,
-        #captured-image-container {
+      #camera-container,
+      #captured-image-container {
           position: relative;
           width: 100%;
           height: 100%;
@@ -52,8 +52,8 @@
 
         #video-box {
           position: absolute;
-          width: 20vw;
-          height: 30vw;
+          width: 25vw;
+          height: 35vw;
           border-radius: 50%;
           background: transparent;
           box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
@@ -92,31 +92,31 @@
           height: 2vw;
           border-radius: 50%;
           border: 1px dashed #000000;
-          bottom: 1vh;
+          bottom: 4vh;
           background-color: #39c24a;
           cursor: pointer;
         }
 
         .confirm{
           position: absolute;
-          left: 17%;
+          left: 53%;
           bottom: 2vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          z-index: 9999;
+          z-index: 9;
         }
 
         .retake{
           position: absolute;
-          left: 23%;
+          left: 48%;
           bottom: 2vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
-          z-index: 9999;
+          z-index: 9;
         }
 
         #retake-btn {
@@ -125,7 +125,7 @@
           height: 2vw;
           border-radius: 50%;
           border: 1px dashed #000000;
-          bottom: 1vh;
+          bottom: 4vh;
           background-color: #d5552f;
           cursor: pointer;
         }
@@ -141,17 +141,21 @@
         .confirm h6{
           position: absolute;
           color: #fff;
-          margin-top: 6vh;
+          margin-top: 0vh;
           text-align: center;
           font-size: 1vw;
+          z-index: 999;
+          bottom: -3vh;
         }
 
         .retake h6 {
           position: absolute;
           color: #fff;
-          margin-top: 6vh;
+          margin-top: 0vh;
           text-align: center;
           font-size: 1vw;
+          bottom: -3vh;
+          z-index: 999;
         }
 
         #controls-container {
@@ -167,23 +171,6 @@
           text-align: center;
           font-size: 1vw;
           width: 9vw;
-        }
-
-        input[type="color" i] {
-          appearance: auto;
-          inline-size: 5vw;
-          block-size: 4vh;
-          cursor: default;
-          box-sizing: border-box;
-          background-color: buttonface;
-          color: buttontext;
-          border-width: 0.1vw;
-          border-style: solid;
-          border-color: buttonborder;
-          border-image: initial;
-          padding: 0.1vh 0.2vw;
-          margin-top: 0.3vh;
-          margin-left: 2vw;
         }
 
         #captured-image-container img {
@@ -322,21 +309,6 @@
           font-weight: 900;
         }
 
-        input[type="color" i] {
-          appearance: auto;
-          inline-size: 10vw;
-          block-size: 4vh;
-          cursor: default;
-          box-sizing: border-box;
-          background-color: buttonface;
-          color: buttontext;
-          border-width: 0.1vw;
-          border-style: solid;
-          border-color: buttonborder;
-          border-image: initial;
-          padding: 0.1vh 0.7vw;
-        }
-
         #captured-image-container img {
           max-width: 100%;
           max-height: 100%;
@@ -364,8 +336,8 @@
 
           #video-box {
             position: absolute;
-            width: 42vw;
-            height: 58vw;
+            width: 48vw;
+            height: 68vw;
             border-radius: 50%;
             background: transparent;
             box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
@@ -393,7 +365,7 @@
             height: 10vw;
             border-radius: 50%;
             border: 1px dashed #000000;
-            bottom: 10vh;
+            bottom: 15vh;
             background-color: #359e7b;
             cursor: pointer;
           }
@@ -446,28 +418,31 @@
             margin-top: 5vh;
             color: white;
             text-align: center;
-            font-size: 3.5vw;
+            font-size: 3.8vw;
             z-index: 9999;
-            bottom: 2vh;
+            bottom: 8vh;
             /* margin-left: -3vw; */
           }
 
           .confirm h6{
             position: absolute;
-            color: #000;
+            color: #fff;
             margin-top: 1vh;
             text-align: center;
             font-size: 3.5vw;
-            /* margin-left: -5vw !important; */
+            margin-left: -6vw !important;
+            bottom: -3vh;
+
           }
 
 
           .retake h6 {
-            color: #000;
+            color: #fff;
             margin-top: 1vh;
             text-align: center;
             font-size: 3.5vw;
-            /* margin-left: -3vw; */
+            margin-left: -4vw;
+            bottom: -3vh;
           }
 
           #controls-container {
@@ -475,21 +450,6 @@
             top: 85%;
             left: 50%;
             width: 5vw;
-          }
-
-          input[type="color" i] {
-            appearance: auto;
-            inline-size: 5vw;
-            block-size: 4vh;
-            cursor: default;
-            box-sizing: border-box;
-            background-color: buttonface;
-            color: buttontext;
-            border-width: 0.1vw;
-            border-style: solid;
-            border-color: buttonborder;
-            border-image: initial;
-            padding: 0.1vh 0.2vw;
           }
 
           #captured-image-container img {
@@ -515,16 +475,22 @@
     <main id='parent-camera-container'>
     <section id="camera-container">
       <video id="video" autoplay></video>
-      <button id="capture-btn"><h6>Capture</h6></button>
+      <div class="capture">
+        <button id="capture-btn"></button>
+        <h6>Capture</h6>
+      </div>
+      
     </section>
 
     <section id="captured-image-container" style="display: none;text-align:center">
       <img id="captured-image" src="" alt="Captured Image" />
       <div class="confirm">
-        <button id="confirm-btn"><h6>Confirm</h6></button>
+        <button id="confirm-btn"></button>
+        <h6>Confirm</h6>
       </div>
       <div class="retake">
-        <button id="retake-btn"><h6>Retake</h6></button>
+        <button id="retake-btn"></button>
+        <h6>Retake</h6>
       </div>
     </section>
   </main>
@@ -620,17 +586,6 @@
             tracks.forEach((track) => track.stop());
           }
         }
-
-        // function updateOverlay() {
-        //   if (showOverlay) {
-        //     videoContainer.insertAdjacentHTML("afterbegin", overlayHTML);
-        //   } else {
-        //     const overlay = document.getElementById("video-box");
-        //     if (overlay) {
-        //       overlay.remove();
-        //     }
-        //   }
-        // }
 
         function updateOverlay() {
           const overlay = document.getElementById("video-box");
