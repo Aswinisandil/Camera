@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bluevoir Camera Capture</title>
+    <title>Bluevoir Camera Component</title>
     <style>
       body {
         font-family: "Arial", sans-serif;
@@ -16,7 +16,7 @@
         justify-content: center;
         align-items: center;
         background-color: #3b3b3b;
-        color: #fff;
+        color: #ffffff;
         font-size: 1rem;
         z-index: 1;
       }
@@ -343,7 +343,11 @@
     </div>
 
     <script>
+
+     
       let bluevoirCameraCaptureModule = (function () {
+
+
         let bluevoirVideoContainer,
           bluevoirVideo,
           bluevoirCaptureBtn,
@@ -385,6 +389,7 @@
 
         async function bluevoirStartCamera() {
           try {
+
             bluevoirStream = await navigator.mediaDevices.getUserMedia({
               video: true,
             });
@@ -399,6 +404,7 @@
               "bluevoir-camera-placeholder"
             ).style.display = "none";
             bluevoirVideo.style.display = "block";
+
           } catch (bluevoirError) {
             console.error("Error accessing camera:", bluevoirError);
             bluevoirPermissionDeniedContainer.style.display = "block";
@@ -480,6 +486,7 @@
           bluevoirCustomConfirmAction = function () {},
           bluevoirOverlayOptions = { display: true }
         ) {
+          window.onbeforeunload = bluevoirStopCamera;
           bluevoirGetElements();
           bluevoirCaptureBtn.addEventListener("click", bluevoirCaptureImage);
           bluevoirConfirmBtn.addEventListener("click", bluevoirHandleConfirm);
@@ -502,11 +509,21 @@
           initialize: bluevoirInit,
           startCamera: bluevoirStartCamera,
           stopCamera: bluevoirStopCamera,
-          retake: bluevoirRetakePicture,
+          retake: bluevoirRetakePicture
         };
+
+
+
+
       })();
 
-      bluevoirCameraCaptureModule.initialize();
+      let bluevoirCustomActionDefined = typeof bluevoirCustomAction !== "undefined";
+      let bluevoirOverlayOptionsDefined = typeof bluevoirOverlayOptions !== "undefined";
+
+      bluevoirCameraCaptureModule.initialize(
+        bluevoirCustomActionDefined ? bluevoirCustomAction : null,
+        bluevoirOverlayOptionsDefined ? bluevoirOverlayOptions : null
+      );
     </script>
   </body>
 </html>
