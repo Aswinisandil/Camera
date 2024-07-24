@@ -11,6 +11,11 @@
         background: #3b3b3b;
       }
 
+      #bluevoir-parent-camera-container {
+        max-width: 728px;
+        max-height: 546px;
+      }
+
       #bluevoir-camera-placeholder {
         display: flex;
         justify-content: center;
@@ -33,8 +38,8 @@
 
       #bluevoir-video-box {
         position: absolute;
-        width: 22.5vw;
-        height: 31.5vw;
+        width: 40%;
+        height: 70%;
         border-radius: 50%;
         background: transparent;
         box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
@@ -61,8 +66,8 @@
       }
 
       #bluevoir-capture-btn {
-        width: 3.5vw;
-        height: 3.5vw;
+        width: 3rem;
+        height: 3rem;
         border-radius: 50% !important;
         border: 1px dashed #359e7b;
         background-color: #359e7b;
@@ -98,7 +103,7 @@
       #bluevoir-retake-container span {
         color: #ffffff !important;
         margin-top: 0.7vh;
-        font-size: 1vw;
+        font-size: 1.5vw;
         z-index: 999;
         font-weight: 500;
       }
@@ -117,8 +122,8 @@
       }
 
       #bluevoir-confirm-btn {
-        width: 3.5vw;
-        height: 3.5vw;
+        width: 3rem;
+        height: 3rem;
         border-radius: 50% !important;
         border: 1px dashed #39c24a;
         background-color: #39c24a;
@@ -139,8 +144,8 @@
       }
 
       #bluevoir-retake-btn {
-        width: 3.5vw;
-        height: 3.5vw;
+        width: 3rem;
+        height: 3rem;
         border-radius: 50% !important;
         border: 1px dashed #d5552f;
         background-color: #d5552f;
@@ -148,160 +153,44 @@
         cursor: pointer;
       }
 
-      @media only screen and (min-width: 1750px) {
-        #bluevoir-video-box {
-          width: 13.5vw;
-          height: 18.9vw;
-        }
-
-        #bluevoir-capture-btn {
-          width: 3vw;
-          height: 3vw;
-        }
-      }
-
-      @media only screen and (min-width: 2000px) {
-        #bluevoir-video-box {
-          display: none !important;
-        }
-        #bluevoir-capture-btn {
-          width: 3vw;
-          height: 3vw;
-        }
-      }
-
-      @media (min-width: 1250px) and (max-width: 1749px) {
-        #bluevoir-video-box {
-          width: 16.301vw;
-          height: 22.821vw;
-        }
-      }
-
       @media only screen and (max-width: 992px) {
         #bluevoir-camera-container,
         #bluevoir-captured-image-container {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          overflow: hidden;
-          display: flex;
           flex-direction: row;
-          justify-content: center;
-          align-items: center;
         }
 
-        #bluevoir-video-box {
-          width: 22.5vw;
-          height: 31.5vw;
-        }
-
-        #bluevoir-capture-container {
-          position: absolute;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          bottom: 10px;
-        }
-
-        #bluevoir-capture-btn {
-          width: 3.5vw;
-          height: 3.5vw;
-          border: 1px dashed #000000;
-          background-color: #359e7b;
-          cursor: pointer;
-        }
-
-        #bluevoir-confirm-btn {
-          width: 3.5vw;
-          height: 3.5vw;
-          border-radius: 50% !important;
-          border: 1px dashed #000000;
-          bottom: 10px;
-          background-color: #39c24a;
-          cursor: pointer;
-        }
-
-        #bluevoir-confirm-container {
-          position: absolute;
-          left: 60%;
-          bottom: 10px;
-        }
-
-        #bluevoir-retake-container {
-          position: absolute;
-          left: 40%;
-          bottom: 10px;
-        }
-
+        #bluevoir-capture-btn,
+        #bluevoir-confirm-btn,
         #bluevoir-retake-btn {
-          width: 3.5vw;
-          height: 3.5vw;
-          border-radius: 50% !important;
-          border: 1px dashed #000000;
-          bottom: 1vh;
-          background-color: #d5552f;
-          cursor: pointer;
+          width: 2rem;
+          height: 2rem;
         }
 
-        #bluevoir-capture-container span {
-          text-align: center;
-          font-size: 1vw;
-        }
-
-        #bluevoir-confirm-container span {
-          text-align: center;
-          font-size: 1.5vw;
-        }
-
-        #bluevoir-retake-container span {
-          text-align: center;
-          font-size: 1.5vw;
-        }
-
-        #bluevoir-captured-image-container img {
-          max-width: 100%;
-          max-height: 100%;
-          margin-top: 0;
+        #bluevoir-capture-container,
+        #bluevoir-confirm-container,
+        #bluevoir-retake-container {
+          bottom: 10px;
         }
       }
 
       @media only screen and (max-width: 575px) {
         #bluevoir-camera-container,
         #bluevoir-captured-image-container {
-          position: relative;
-          width: 100%;
           height: 80%;
-          overflow: hidden;
           margin: 5vh auto !important;
         }
 
-        #bluevoir-video {
-          width: 100%;
-          height: 100%%;
+        #bluevoir-capture-btn,
+        #bluevoir-confirm-btn,
+        #bluevoir-retake-btn {
+          width: 1.8rem;
+          height: 1.8rem;
         }
 
-        #bluevoir-video-box {
-          display: none;
-        }
-
-        #bluevoir-capture-container {
-          position: absolute;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          bottom: 10px;
-          left: 50%;
-          z-index: 9999;
-        }
-
-        #bluevoir-capture-btn {
-          width: 3.5vw;
-          height: 3.5vw;
-          border: 1px dashed #000000;
-          background-color: #359e7b;
-          cursor: pointer;
+        #bluevoir-capture-container span,
+        #bluevoir-confirm-container span,
+        #bluevoir-retake-container span {
+          font-size: 2vw;
         }
       }
     </style>
@@ -343,11 +232,7 @@
     </div>
 
     <script>
-
-     
       let bluevoirCameraCaptureModule = (function () {
-
-
         let bluevoirVideoContainer,
           bluevoirVideo,
           bluevoirCaptureBtn,
@@ -389,7 +274,6 @@
 
         async function bluevoirStartCamera() {
           try {
-
             bluevoirStream = await navigator.mediaDevices.getUserMedia({
               video: true,
             });
@@ -404,7 +288,6 @@
               "bluevoir-camera-placeholder"
             ).style.display = "none";
             bluevoirVideo.style.display = "block";
-
           } catch (bluevoirError) {
             console.error("Error accessing camera:", bluevoirError);
             bluevoirPermissionDeniedContainer.style.display = "block";
@@ -509,16 +392,14 @@
           initialize: bluevoirInit,
           startCamera: bluevoirStartCamera,
           stopCamera: bluevoirStopCamera,
-          retake: bluevoirRetakePicture
+          retake: bluevoirRetakePicture,
         };
-
-
-
-
       })();
 
-      let bluevoirCustomActionDefined = typeof bluevoirCustomAction !== "undefined";
-      let bluevoirOverlayOptionsDefined = typeof bluevoirOverlayOptions !== "undefined";
+      let bluevoirCustomActionDefined =
+        typeof bluevoirCustomAction !== "undefined";
+      let bluevoirOverlayOptionsDefined =
+        typeof bluevoirOverlayOptions !== "undefined";
 
       bluevoirCameraCaptureModule.initialize(
         bluevoirCustomActionDefined ? bluevoirCustomAction : null,
