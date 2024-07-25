@@ -174,6 +174,11 @@
       }
 
       @media only screen and (max-width: 575px) {
+        #bluevoir-video-box {
+          width: 55vw;
+          height: 80vw;
+        }
+
         #bluevoir-camera-container,
         #bluevoir-captured-image-container {
           height: 80%;
@@ -232,7 +237,7 @@
     </div>
 
     <script>
-      let bluevoirCameraCaptureModule = (function () {
+       bluevoirCameraCaptureModule = (function () {
         let bluevoirVideoContainer,
           bluevoirVideo,
           bluevoirCaptureBtn,
@@ -272,30 +277,35 @@
           );
         }
 
-        async function bluevoirStartCamera() {
-          try {
-            bluevoirStream = await navigator.mediaDevices.getUserMedia({
-              video: true,
-            });
-            bluevoirVideo.srcObject = bluevoirStream;
-            if (bluevoirPermissionDeniedContainer.style.display === "block") {
-              bluevoirPermissionDeniedContainer.style.display = "none";
-            }
-            if (bluevoirParentCameraContainer.style.display === "none") {
-              bluevoirParentCameraContainer.style.display = "block";
-            }
+        function bluevoirHandleDisplay(permissionGranted) {
+          if (permissionGranted) {
+            bluevoirPermissionDeniedContainer.style.display = "none";
+            bluevoirParentCameraContainer.style.display = "block";
             document.getElementById(
               "bluevoir-camera-placeholder"
             ).style.display = "none";
             bluevoirVideo.style.display = "block";
-          } catch (bluevoirError) {
-            console.error("Error accessing camera:", bluevoirError);
+          } else {
             bluevoirPermissionDeniedContainer.style.display = "block";
             document.getElementById(
               "bluevoir-camera-placeholder"
             ).style.display = "none";
             bluevoirParentCameraContainer.style.display = "none";
           }
+        }
+
+        function bluevoirStartCamera() {
+          navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(bluevoirStream) {
+              // Success callback
+              bluevoirVideo.srcObject = bluevoirStream;
+              bluevoirHandleDisplay(true);
+            })
+            .catch(function(bluevoirError) {
+              // Error callback
+              console.error("Error accessing camera:", bluevoirError);
+              bluevoirHandleDisplay(false);
+            });
         }
 
         function bluevoirCaptureImage(e) {
@@ -369,11 +379,8 @@
           bluevoirCustomConfirmAction = function () {},
           bluevoirOverlayOptions = { display: true }
         ) {
-          window.onbeforeunload = bluevoirStopCamera;
           bluevoirGetElements();
-          bluevoirCaptureBtn.addEventListener("click", bluevoirCaptureImage);
-          bluevoirConfirmBtn.addEventListener("click", bluevoirHandleConfirm);
-          bluevoirRetakeBtn.addEventListener("click", bluevoirRetakePicture);
+    
           bluevoirStartCamera();
           bluevoirConfirmAction = bluevoirCustomConfirmAction;
 
@@ -385,7 +392,13 @@
             bluevoirOverlayColor =
               bluevoirOverlayOptions.color || "rgba(0,0,0,0.5)";
           }
+          window.addEventListener('beforeunload', bluevoirStopCamera);
           bluevoirUpdateOverlay();
+          bluevoirCaptureBtn.addEventListener("click", bluevoirCaptureImage);
+          bluevoirConfirmBtn.addEventListener("click", bluevoirHandleConfirm);
+          bluevoirRetakeBtn.addEventListener("click", bluevoirRetakePicture);
+
+      
         }
 
         return {
@@ -393,12 +406,13 @@
           startCamera: bluevoirStartCamera,
           stopCamera: bluevoirStopCamera,
           retake: bluevoirRetakePicture,
+          stream: bluevoirStream
         };
       })();
 
-      let bluevoirCustomActionDefined =
+       bluevoirCustomActionDefined =
         typeof bluevoirCustomAction !== "undefined";
-      let bluevoirOverlayOptionsDefined =
+       bluevoirOverlayOptionsDefined =
         typeof bluevoirOverlayOptions !== "undefined";
 
       bluevoirCameraCaptureModule.initialize(
